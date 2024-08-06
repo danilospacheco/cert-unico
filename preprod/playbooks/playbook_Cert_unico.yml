@@ -1,0 +1,188 @@
+---
+- hosts: mvpf
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/mvpf.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+   #- name: Executando Backup
+    # become: yes
+     #become_user: weblogic
+     #shell: 'cp -p /opt/web/wl/wlp1036/domains/WLP_MEUVIVO_PF_QA/seguranca/meuvivo-trusted-certs.jks /opt/web/wl/wlp1036/domains/WLP_MEUVIVO_PF_QA/seguranca/bkp/meuvivo-trusted-certs.jks.ORI'
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/meuvivo-trusted-certs.jks'
+       #dest: '{{ dir }}/meuvivo-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/meuvivo-trusted-certs.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/meuvivo-trusted-certs.jks"
+       backup: no
+
+- hosts: mvlogin
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/mvlogin.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/login-trusted-certs.jks'
+       #dest: '{{ dir }}/login-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/meuvivo-trusted-certs.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/login-trusted-certs.jks"
+       backup: no
+
+- hosts: mvpj
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/mvpj.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/DemoTrust.jks'
+       #dest: '{{ dir }}/login-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/DemoTrust.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/DemoTrust.jks"
+       backup: no
+
+- hosts: mvportal
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/mvportal.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/DemoTrust.jks'
+       #dest: '{{ dir }}/login-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/DemoTrust.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/DemoTrust.jks"
+       backup: no
+
+- hosts: mvmobile
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/mvmobile.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/meuvivo-trusted-certs.jks'
+       #dest: '{{ dir }}/meuvivo-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/meuvivo-trusted-certs.jks_bkp'
+       backup: no
+       
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/meuvivo-trusted-certs.jks"
+       backup: no
+
+- hosts: intongoing
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/intongoing.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/TODOS.ONGOING.jks'
+       #dest: '{{ dir }}/meuvivo-trusted-certs.jks_NAO_APAGAR'
+       dest: '{{ dir }}/TODOS.ONGOING.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/TODOS.ONGOING.jks"
+       backup: no
+
+- hosts: intb2bstack
+  vars_files:
+    - /opt/web/ansible/production/certificado/preprod/vars/intb2bstack.yml
+  remote_user: cmpdevops
+  gather_facts: false
+  tasks:
+
+   - name: Efetuando Backup
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: yes
+       src: '{{ dir }}/TODOS.B2B.STACK.jks'
+       dest: '{{ dir }}/TODOS.B2B.STACK.jks_bkp'
+       backup: no
+
+   - name: Transferindo JKS para servidor destino
+     become: yes
+     become_user: weblogic
+     copy:
+       remote_src: no
+       src: "{{ src_dir }}/meuvivo-trusted-certs.jks"
+       dest: "{{ dir }}/TODOS.B2B.STACK.jks"
+       backup: no
+
+
+

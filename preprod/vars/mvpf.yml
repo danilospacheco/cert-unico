@@ -1,0 +1,5 @@
+---
+# vars file for certificado
+src_dir: '/opt/web/ansible/production/certificado/certificado'
+dir: '/opt/web/wl/wlp1036/domains/WLP_MEUVIVO_PF_HML/seguranca'
+
